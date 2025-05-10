@@ -1,21 +1,23 @@
 import { generateForecastHTML } from "./getForecast.js";
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import { updateBackgroundGradient } from "./background.js";
 
 export async function getWeather(lat, lng, appid) {
     try {
         const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${appid}&units=metric`);
         const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${appid}&units=metric`);
+        const timezoneResponse = await fetch(`http://api.timezonedb.com/v2.1/get-time-zone?key=2AW5GPMWNZ2T&format=json&by=position&lat=${lat}&lng=${lng}`)
         const weatherData = await weatherResponse.json()
         const forecastData = await forecastResponse.json();
-        console.log(weatherData);
-        console.log(forecastData);
-        showData(weatherData, forecastData);
+        const localTime = await timezoneResponse.json();
+        console.log(localTime)
+        showData(weatherData, forecastData, localTime);
     } catch (err) {
         console.error('Fetch error:', err);
     }
 }
 
-export function showData(weatherData, forecastData) {
+export function showData(weatherData, forecastData, localTime) {
     
     const name = weatherData.name;
     const temp = Math.round(weatherData.main.temp);
@@ -28,8 +30,10 @@ export function showData(weatherData, forecastData) {
     const windDir = weatherData.wind.deg
     const main = weatherData.weather[0].main;
     const desc = weatherData.weather[0].description;
-    const icon = weatherData.weather[0].icon
+    const icon = weatherData.weather[0].icon;
+    const id = weatherData.weather[0].id;
     
+    updateBackgroundGradient(id, localTime);
 
     /*
     const name = 'Kosice';
