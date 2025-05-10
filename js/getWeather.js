@@ -1,3 +1,6 @@
+import { generateForecastHTML } from "./getForecast.js";
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+
 export async function getWeather(lat, lng, appid) {
     try {
         const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${appid}&units=metric`);
@@ -6,8 +9,7 @@ export async function getWeather(lat, lng, appid) {
         const forecastData = await forecastResponse.json();
         console.log(weatherData);
         console.log(forecastData);
-        //showData(weatherData);
-        //showData(forecastData);
+        showData(weatherData, forecastData);
     } catch (err) {
         console.error('Fetch error:', err);
     }
@@ -43,19 +45,15 @@ export function showData(weatherData, forecastData) {
 
     const html = `
         <h2 class="location" id="location">${name}</h2>
-            <p class="date" id="date">Monday, June 10, 2023</p>
+            <p class="date" id="date">${dayjs().format('dddd, MMMM, D, YYYY')}</p>
             
             <div class="temperature-container">
-                <img src="https://openweathermap.org/img/wn/01d@2x.png" alt="Weather Icon" class="weather-icon" id="weather-icon">
+                <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="Weather Icon" class="weather-icon" id="weather-icon">
                 <div class="temperature" id="temperature">
                     ${temp}<span class="temperature-unit">°</span>
                 </div>
                 <h3 class="weather-description" id="weather-description">${desc}</h3>
                 <p class="feels-like" id="feels-like">Feels like ${tempFeels}°</p>
-                <div class="unit-toggle">
-                    <button class="unit-btn active" id="celsius-btn">°C</button>
-                    <button class="unit-btn" id="fahrenheit-btn">°F</button>
-                </div>
             </div>
 
             
@@ -81,36 +79,7 @@ export function showData(weatherData, forecastData) {
         <div class="forecast-container">
             <h3 class="forecast-title">5-Day Forecast</h3>
             <div class="forecast-items" id="forecast-items">
-                <div class="forecast-item">
-                    <p class="forecast-day">Tue</p>
-                    <img src="https://openweathermap.org/img/wn/01d.png" alt="Weather Icon" class="forecast-icon">
-                    <p class="forecast-temp">26°</p>
-                    <p class="forecast-description">Clear</p>
-                </div>
-                <div class="forecast-item">
-                    <p class="forecast-day">Wed</p>
-                    <img src="https://openweathermap.org/img/wn/02d.png" alt="Weather Icon" class="forecast-icon">
-                    <p class="forecast-temp">24°</p>
-                    <p class="forecast-description">Few clouds</p>
-                </div>
-                <div class="forecast-item">
-                    <p class="forecast-day">Thu</p>
-                    <img src="https://openweathermap.org/img/wn/10d.png" alt="Weather Icon" class="forecast-icon">
-                    <p class="forecast-temp">22°</p>
-                    <p class="forecast-description">Rain</p>
-                </div>
-                <div class="forecast-item">
-                    <p class="forecast-day">Fri</p>
-                    <img src="https://openweathermap.org/img/wn/03d.png" alt="Weather Icon" class="forecast-icon">
-                    <p class="forecast-temp">25°</p>
-                    <p class="forecast-description">Clouds</p>
-                </div>
-                <div class="forecast-item">
-                    <p class="forecast-day">Sat</p>
-                    <img src="https://openweathermap.org/img/wn/01d.png" alt="Weather Icon" class="forecast-icon">
-                    <p class="forecast-temp">27°</p>
-                    <p class="forecast-description">Clear</p>
-                </div>
+            ${generateForecastHTML(forecastData)}
             </div>
         </div>
     `;
