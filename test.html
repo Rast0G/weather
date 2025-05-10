@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wind Direction</title>
+  <style>
+    #wind-arrow {
+      display: inline-block;
+      font-size: 50px;
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Wind Direction</h1>
+
+  <!-- Arrow and direction -->
+  <div>
+    <p id="wind-arrow">&#x2191;</p> <!-- Arrow -->
+    <p id="wind-direction"></p>    <!-- Direction Text -->
+  </div>
+
+  <script>
+    // Wind direction (e.g. from 121°)
+    const windDeg = 121;  // You can change this value
+
+    // Get the arrow element
+    const arrow = document.getElementById('wind-arrow');
+
+    // Rotate the arrow based on wind direction (degrees)
+    arrow.style.transform = `rotate(${windDeg + 180}deg)`;  // Rotate based on degrees
+
+    // Convert the degree to a compass direction
+    function degToCompass(deg) {
+      const directions = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+      return directions[Math.round(deg / 45) % 8];
+    }
+
+    // Show the direction text (e.g., "Wind: 121° from SE")
+    const direction = degToCompass(windDeg);
+    document.getElementById('wind-direction').textContent = `Wind: ${windDeg}° from ${direction}`;
+  </script>
+
+</body>
+</html>
