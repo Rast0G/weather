@@ -30,11 +30,13 @@ export function generateForecastHTML (data) {
             const intervalTemp = interval.main.temp
             averageTemp += intervalTemp/8
 
-            const icon = interval.weather[0].icon;
-            const description = interval.weather[0].main;
-            counts[icon] = (counts[icon] || 0) + 1;
-            if (!iconDescriptions[icon]) {
-                iconDescriptions[icon] = description;
+            if (interval.weather[0].icon[2] === 'd') {
+                const icon = interval.weather[0].icon;
+                const description = interval.weather[0].main;
+                counts[icon] = (counts[icon] || 0) + 1;
+                if (!iconDescriptions[icon]) {
+                    iconDescriptions[icon] = description;
+                }
             }
 
             if (intervalTemp < lowestTemp) {
