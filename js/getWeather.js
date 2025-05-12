@@ -81,7 +81,7 @@ export function showData(weatherData, forecastData, localTime) {
         </div>
         
         <div class="forecast-container">
-            <h3 class="forecast-title">5-Day Forecast</h3>
+            <h3 class="forecast-title">4-Day Forecast</h3>
             <div class="forecast-items" id="forecast-items">
             ${generateForecastHTML(forecastData)}
             </div>

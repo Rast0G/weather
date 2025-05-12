@@ -50,11 +50,10 @@ export function generateForecastHTML (data) {
         const mostUsedIcon = Object.entries(counts).reduce((a, b) => (a[1] > b[1] ? a : b))[0];
         const mostUsedDescription = iconDescriptions[mostUsedIcon];
 
-        const showIcon = mostUsedIcon[0] + mostUsedIcon[1]
         html += `
             <div class="forecast-item">
                 <p class="forecast-day">${dayjs().add(i, 'days').format('dddd')}</p>
-                <img src="https://openweathermap.org/img/wn/${showIcon}d.png" alt="Weather Icon" class="forecast-icon">
+                <img src="https://openweathermap.org/img/wn/${mostUsedIcon}.png" alt="Weather Icon" class="forecast-icon">
                 <p class="forecast-temp">${Math.round(lowestTemp)}° - ${Math.round(highestTemp)}°</p>
                 <p class="forecast-description">${mostUsedDescription}</p>
             </div>

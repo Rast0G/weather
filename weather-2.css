@@ -307,7 +307,7 @@ header {
 .forecast-items {
     display: flex;
     overflow-x: auto;
-    gap: 1rem;
+    justify-content: space-between;
     padding: 0.5rem 0;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
@@ -323,7 +323,7 @@ header {
     border: 1px solid var(--card-border);
     border-radius: var(--radius);
     padding: 1.5rem;
-    min-width: 120px;
+    min-width: 180px;
     text-align: center;
     flex-shrink: 0;
 }
