@@ -6,7 +6,7 @@ export async function getWeather(lat, lng, appid) {
     try {
         const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${appid}&units=metric`);
         const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lng}&appid=${appid}&units=metric`);
-        const timezoneResponse = await fetch(`http://api.timezonedb.com/v2.1/get-time-zone?key=2AW5GPMWNZ2T&format=json&by=position&lat=${lat}&lng=${lng}`)
+        const timezoneResponse = await fetch(`https://api.timezonedb.com/v2.1/get-time-zone?key=2AW5GPMWNZ2T&format=json&by=position&lat=${lat}&lng=${lng}`)
         const weatherData = await weatherResponse.json()
         const forecastData = await forecastResponse.json();
         const localTime = await timezoneResponse.json();
